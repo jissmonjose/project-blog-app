@@ -1,0 +1,67 @@
+create a templates dir and then create a fir in templates dir with appname.
+
+so each templates will be considered specific to that app.
+
+so for each app we create a dir with same name in templates dir.
+
+
+post = [
+    {'author': 'jiss',
+     'title': 'blogpost',
+     'content': 'First Post',
+     }
+]
+
+
+def home(request, template_name='blogapp/index.html'):
+    context = {'post': post}
+    return render(request, template_name, context)
+
+
+
+here v pass the post data as a dict in view function.
+
+by passing context dict as an argument to render() it allows the templates to
+render the contents of context dictionary.
+
+
+so the key name 'post' is accessible with in the template index.html
+and we can loop thru it to print the data in the post to the template.
+
+
+template engine in django allows to write code with in the template.
+
+
+    <section id="content">
+        <div class="container">
+            {% for each in post %}
+                <p>
+                <strong>Author:</strong> <span>{{each.author}}</span>
+                    </p>
+                <p>
+                <strong>Title:</strong> <span>{{each.title}}</span>
+                </p>
+                <p>
+                <strong>Content:</strong> <span>{{each.content}}</span>
+                </p>
+            {% endfor %}
+        </div>
+    </section>
+
+
+use  {{}} to access a variable inside the post.
+
+
+
+
+template inheritamce
+
+
+nehriting the base template to each other templates.
+
+
+
+
+
+
+

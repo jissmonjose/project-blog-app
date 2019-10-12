@@ -1,0 +1,28 @@
+{% extends 'blogapp/base.html' %}
+
+{% block content %}
+    <section id="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+            {% for post in posts %}
+            <div class="card my-3">
+
+                <div class="card-header">{{post.title}}</div>
+                <div class="card-body">
+<!--                    <h4 class="card-title">{{post.author}}</h4>-->
+                    <h5 class="card-title">{{post.content}}</h5>
+                    <p><a href="#">{{post.author}}</a></p>
+                    <p>{{post.date}}</p>
+                </div>
+            </div>
+
+            {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+

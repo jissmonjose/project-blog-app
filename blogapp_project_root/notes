@@ -61,6 +61,159 @@ nehriting the base template to each other templates.
 
 
 
+error
+---------
+django.db.utils.OperationalError: no such table: auth_user
+
+problem is not created database for the project
+so to create them,
+- python manage.py migrate
+
+
+
+in django orm we can represent db structures as classes.
+and we call them as models.
+
+
+each class will be a table in the db.
+and each attribute of class will be a diff field in that table.
+
+all models inherit from models.Model class.
+
+TextField is alwaysu unrestricted field.  so need to specif the max lenght
+
+
+
+
+
+
+from django.db import models
+from datetime import datetime
+# import the user model
+from django.contrib.auth.models import User
+
+
+# Create your models here.
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    date = models.DateField(default=datetime.now)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+-- we want to tell django wat to do if author created the post gets deleted. 
+
+so here models.CASCADE means delete the post as well when the user is deleted.
+
+if a user has 10 post, and if user is deleted then the aforementioned posts also gets deleted.
+
+but if v delete a post, it not delete the user who publshed it.
+
+
+onve ceated a models need t run the migrations to uodate that changes in the db.
+
+python manage.py makemigrations
+
+ -- it makes an 0001_initial.py file i migrations.
+	ehich conatins sqlcode to be executed.
+to see the sqlcode,
+ - python manage.py sqlmigrate bloagapp 0001_initial
+
+to apply the migrayions finally to the db,
+	- python manage.py migrate 
+	it will create a table in the db.
+
+
+
+by running migrations we cal always make change to the db when v made changes in the model.
+
+Using Django shell
+-----------------------
+
+
+from appname.models import User
+
+>>> User.objects.all()
+<QuerySet [<User: jiss>, <User: modric>]>
+
+> User.objects.first()
+<User: jiss>
+
+
+>> User.objects.filter(username='jiss')
+<QuerySet [<User: jiss>]>
+
+
+
+>>> user = User.objects.get(id=1)
+>>> user
+
+
+p>{{post.date|date:"F d, Y"}}</p> -- strips the time from the datetime,
+refer : https://docs.djangoproject.com/en/2.2/ref/templates/builtins/#date
+
+
+
+
+
+create a new app for users.
+create  register form for them using userCreationForm class
+
+from django.shortcuts import render
+# import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm
+
+
+# Create your views here.
+def register(request, template_name='usersapp/register.html'):
+    form = UserCreationForm()
+    return render(request, template_name, {'form': form})
+
+
+here v shud create the templates  in app dir.
+-usersapp
+	-templates
+		-usersapp
+			register.html
+
+
+
+
+# Create your views here.
+def register(request):
+    # create instance of form , if request is not posted or if posted.
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+            return redirect('blogapp-home')
+    else:
+        form = RegisterForm()
+    return render(request, 'usersapp/register.html', {'form': form})
+
+
+when v submitted the form it submitted as a post request,
+and in view if request.method  is post.
+v create a form instance with the posted data.
+so now our form has usename, email, and passwords fields.
+and then if our form is valid. then save it to db, if not valid return the register template with form having the value v submitted, and then fetch the username form that form,
+later v print a flash message success bcose it is saved successfully,
+later v redirect the page to our home page.
+
+
+in case method is not post v create an empty form
+
+	 
+
+
+
+
+
+	
 
 
 

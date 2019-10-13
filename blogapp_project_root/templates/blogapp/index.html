@@ -11,9 +11,9 @@
                 <div class="card-header">{{post.title}}</div>
                 <div class="card-body">
 <!--                    <h4 class="card-title">{{post.author}}</h4>-->
-                    <h5 class="card-title">{{post.content}}</h5>
+                    <p class="card-title">{{post.content}}</p>
                     <p><a href="#">{{post.author}}</a></p>
-                    <p>{{post.date}}</p>
+                    <p>{{post.date|date:"F d, Y"}}</p>
                 </div>
             </div>
 

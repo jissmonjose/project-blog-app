@@ -209,8 +209,19 @@ in case method is not post v create an empty form
 
 	 
 
+changing navbar link based on user authentcation
+---------------------------------------------------
+
+{% if user.is_authenticated %}
+    <a class="nav-item nav-link" href="{% url 'usersapp:logout' %}">Logout</a>
+{% else %}
+<a class="nav-item nav-link" href="{% url 'usersapp:login' %}">Login</a>
+<a class="nav-item nav-link" href="{% url 'usersapp:register' %}">Register</a>
+{% endif %}
 
 
+next giving restriction to access a user profile b4 login
+----------------------------------------------------
 
 
 	

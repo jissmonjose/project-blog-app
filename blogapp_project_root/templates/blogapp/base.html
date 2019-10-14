@@ -24,13 +24,23 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'blogapp-home' %}">Home</a>
-              <a class="nav-item nav-link" href="{% url 'blogapp-about' %}">About</a>
+                {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{% url 'blogapp-home' %}">Home</a>
+                    <a class="nav-item nav-link" href="{% url 'blogapp-about' %}">About</a>
+                {% else %}
+                    <a class="nav-item nav-link d-none" href="{% url 'blogapp-home' %}">Home</a>
+                    <a class="nav-item nav-link d-none" href="{% url 'blogapp-about' %}">About</a>
+                {% endif %}
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
-              <a class="nav-item nav-link" href="#">Login</a>
-              <a class="nav-item nav-link" href="{% url 'usersapp:register' %}">Register</a>
+            <!--to check whether loggined in or logged out-->
+                {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{% url 'usersapp:logout' %}">Logout</a>
+                {% else %}
+                <a class="nav-item nav-link" href="{% url 'usersapp:login' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'usersapp:register' %}">Register</a>
+                {% endif %}
             </div>
           </div>
         </div>

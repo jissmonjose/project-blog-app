@@ -224,7 +224,84 @@ next giving restriction to access a user profile b4 login
 ----------------------------------------------------
 
 
-	
+checkin before accessing user profile page
+
+# importing login requfred decorator before accesing profile page
+from django.contrib.auth.decorators import login_required
+
+#later add 
+@login_required
+def user_profile(request):
+    return render(request, template_name='usersapp/profile.html')
+
+
+
+page not fornd
+-------------------
+Request URL:	http://127.0.0.1:8080/accounts/login/?next=/user/profile/
+
+given abv is the default path django looks for login,
+so here v need to expicilty tell django to where to find our login route.
+ 
+we can easily set that by adding LOGIN_URL in settings.py file
+
+LOGIN_URL = 'userapp:login'
+
+our url changes to: while moving to login/
+
+http://127.0.0.1:8080/user/login/?next=/user/profile/
+which means next after login we naviagte to profile page	
+
+
+thus setting this allows users to login and then redirect to the profile page once loggedout
+ 
+
+
+one to one relationship
+----------------------
+one user have one prfile and one profile associates with one user.
+
+
+MODELS.PY
+--------------
+
+from django.db import models
+
+from django.contrib.auth.models import User
+
+
+# Create your models here.
+
+class Profile(models.Model):
+	v set a one to one relation with feafult User model in django
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+	if user is delted proile deleted bt if profile deleted user not 	deleted.
+	   image = models.ImageField(default='default.jpg', upload_to='profile_images')
+
+    def __str__(self):
+        return f"{self.user.username}'s profile"
+
+
+     
+
+
+python manage.py shell
+-----------------------
+from django.contrib.auth.models import User
+user = User.objects.filter('megan').first()
+
+user.profile
+user.profile.user
+user.profile.image
+user.profile.image.url
+
+
+now v can access the profile from user models since onetooine relationship.
+
+
+
+megan
+testing888
 
 
 

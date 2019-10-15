@@ -36,8 +36,8 @@
             <div class="navbar-nav">
             <!--to check whether loggined in or logged out-->
                 {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'usersapp:logout' %}">Logout</a>
-                    <a class="nav-item nav-link" href="{% url 'usersapp:user_profile' %}">Profile</a>
+                <a class="nav-item nav-link" href="{% url 'usersapp:user_profile' %}">Profile</a>
+                <a class="nav-item nav-link" href="{% url 'usersapp:logout' %}">Logout</a>
                 {% else %}
                 <a class="nav-item nav-link" href="{% url 'usersapp:login' %}">Login</a>
                 <a class="nav-item nav-link" href="{% url 'usersapp:register' %}">Register</a>

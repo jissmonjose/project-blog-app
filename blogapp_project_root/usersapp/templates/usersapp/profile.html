@@ -1,15 +1,14 @@
 {% extends 'blogapp/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 
-{% for user in users %}
-    <div class='container'>
-        <div class="row py-4">
-            <div class="col-md-12">
-                <h3>{{user.user}}</h3>
-                <img src="{{user.image.url}}" height="200" width="200">
-            </div>
+    <div class=content-section>
+        <div class="person p-2 mb-4">
+        <img class="rounded-circle float-left mr-2" src="{{user.profile.image.url}}" height="100" width="100">
+                  <div class="data">
+                      <h2 class="account-heading">{{ user.username }}</h2>
+                      <p class="text-secondary">{{ user.email }}</p>
+                  </div>
         </div>
     </div>
-{% endfor %}
 {% endblock %}

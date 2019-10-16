@@ -298,7 +298,51 @@ user.profile.image.url
 
 now v can access the profile from user models since onetooine relationship.
 
+now v created a profilw page for the user.
 
+post_save - a signal that gets fired after saved the objects.
+so here v need to fire a postsave signal when a user is created.
+
+from django.db.models.signals import post_save
+from django.contrib.auth.models import User
+
+here user model is the dsender f the signal
+next v need to create who receives the signal andperform some task.
+
+from django.dispatch import receiver
+
+and finally import profile models
+from .models import Profile
+
+the main reaoson for doing this to create a user profile for new users.
+
+so lets cretate a fucntion first,
+
+# here v have  a funtion that createsa user profile
+# every time a user is created.
+@receiver(post_save, sender=User)
+def CreateProfile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+# there is asender user and a sginal post_save
+# means that when a user is saved  User sends post_save signal
+# and the signa is received by the decoraot receiver
+# and here this reciever is th create_profile function,
+# and this takes all the arguments.
+# two main r instance and created args.
+# and then if that user instance is created ,then create a profile of that user instance.
+
+
+@receiver(post_save, sender=User)
+def SaveProfile(sender, instance, **kwargs):
+    instance.profile.save()
+
+
+# herev just save the instance of user profile.
+
+
+and at last v need to impor these signal in the apps.py  module.
 
 megan
 testing888

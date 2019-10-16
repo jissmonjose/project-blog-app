@@ -5,6 +5,7 @@ from django import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile
+from .register import UserUpdateForm, ProfileUpdateForm
 
 
 # Create your views here.
@@ -24,6 +25,12 @@ def register(request):
 
 @login_required
 def user_profile(request, template_name='usersapp/profile.html'):
-    return render(request, template_name)
-
-
+    # v instantiate our forms as empty
+    update_form = UserUpdateForm()
+    profile_form = ProfileUpdateForm()
+    # later create context which key value pairs of that new isntance of form
+    context = {
+        'update_form': update_form, 'profile_form': profile_form
+    }
+    # pass that context to template
+    return render(request, template_name, context)

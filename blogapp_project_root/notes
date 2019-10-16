@@ -343,6 +343,49 @@ def SaveProfile(sender, instance, **kwargs):
 
 
 and at last v need to impor these signal in the apps.py  module.
+from django.apps import AppConfig
+
+
+class UsersappConfig(AppConfig):
+    name = 'usersapp'
+
+    def ready(self):
+        import usersapp.signals
+
+
+later run server and creat a user and later login and access a prfile 
+it will only be created instead of going to admin and later create a profile for that new user lot more easier.
+
+
+uodating user profile
+----------------------
+v create forms suing modelforms
+
+modelforms allows to create a form that works with a specific db model
+here v create a form that works with our User model.
+
+
+# updating user - modelforms
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
+
+    # here v just update the email and username fields.
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+
+# updating profile image so create a new form that inherits model form
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']
+
+ here v used two forms but it appears in on form only.
+
+
+
+
 
 megan
 testing888

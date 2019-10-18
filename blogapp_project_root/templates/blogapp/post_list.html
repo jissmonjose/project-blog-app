@@ -2,13 +2,11 @@
 
 {% block content %}
     <section id="content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10">
+
             {% for post in posts %}
             <div class="card my-3">
 
-                <div class="card-header">{{post.title}}</div>
+                <div class="card-header"><a href="{% url 'blog_post_detail' post.pk %}" class="text-dark">{{post.title}}</a></div>
                 <div class="card-body">
 <!--                    <h4 class="card-title">{{post.author}}</h4>-->
                     <p class="card-title">{{post.content}}</p>
@@ -18,9 +16,7 @@
             </div>
 
             {% endfor %}
-                </div>
-            </div>
-        </div>
+
     </section>
 
 {% endblock %}

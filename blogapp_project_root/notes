@@ -453,6 +453,88 @@ img = Image.open(self.image.path)
 
 
 
+CLASS BASED VIEWS
+-------------------
+
+listview - list of blogs
+detailview - detail of a specific blog
+updateview - update blog 
+deleteview - delete blog
+
+listview
+---------
+
+class Viewname(ListView):
+	model = name
+	context_object_name ='name'
+
+
+
+in urls.py
+-----------------
+path('list/', views.Viewname.as_views(), name='')
+
+
+change templates name yourmodelname_list.html 
+it naming convention is modelname_viewtype.html
+
+eg: post_list.html
+
+ bt van also change this default naming convention
+
+by specifying template_name = 'blog/home.html' in the view itself.
+
+v can also change default context name by setting
+'context_object_name' attrbute
+
+
+
+# to order the post from latest to oldest
+    ordering = ['-date']
+
+
+
+detailview
+--------------
+
+class PostDetail(DetailView):
+	model = Post
+
+
+next map the url 
+here v include the id of each toute along with url
+so if want detail post of id 1
+then it wud be  like
+	post/1
+	post/2
+
+path('post/<int:pk>', views.POstdetail.as_view(), name='post_details')
+
+here int is the type of variable v want which is int
+pk is the ok of the post.
+
+here v set the url in template to this page as
+
+{% for post in posts %}
+	<a href= '{% url 'post_details' post.pk %}' ></a>
+{% endfor %}
+
+note:
+---------------
+if v try to go to post with incorrect id
+it shows page not founs error. which means no post with the 
+given id.
+
+
+
+
+
+
+
+
+
+
+
 megan
 testing888
 

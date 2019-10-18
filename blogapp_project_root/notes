@@ -381,9 +381,75 @@ class ProfileUpdateForm(forms.ModelForm):
         model = Profile
         fields = ['image']
 
- here v used two forms but it appears in on form only.
+ here v used two forms but it appears in on form only
+
+<form method="POST" enctype="multipart/form-data">
+
+-- use enctype attribute while using a form that contains updating images. else image  may not be saved while submitting the form.
 
 
+  # v instantiate our forms with the current values in the form
+    update_form = UserUpdateForm(instance=request.user)
+    profile_form = ProfileUpdateForm(instance=request.user.profile)
+
+here v instantiate the form with the current data in it without empty.
+
+
+
+
+
+
+our entire user profile form including updating, saving images....
+---------------------------------------------------------------------
+
+@login_required
+def user_profile(request, template_name='usersapp/profile.html'):
+    # here v check whether the method is post or not
+    if request.method == 'POST':
+        # v instantiate our forms with the current values in the form AND PASS THE POSTED DATA INTO IT.
+        # request.FILES r used since v post images.
+        update_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        # if both r valid forms
+        if update_form.is_valid() & profile_form.is_valid():
+            update_form.save()
+            profile_form.save()
+            messages.success(request, 'Your Account has bee updated!')
+
+            # later redirect to our profile page after saving the data to db
+            return redirect('usersapp:user_profile')
+    # if not, still leave the form wth the current values
+    else:
+        update_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+    # later create context which key value pairs of that new isntance of form
+    context = {
+        'update_form': update_form, 'profile_form': profile_form
+    }
+    # pass that context to template
+    return render(request, template_name, context)
+
+
+
+
+
+RESIZING THE IMAGES BEFORE UPLOADING 
+----------------
+
+OVERRIDE SAVE METHOD IN OUR MODELS
+THIS SAVE () IS RUNNED AFTER V SAVE THE MODEL.
+this save() already exist in parent class.
+here v run the save() method of parent
+ 
+--super().save()
+
+next v resize the image.
+
+
+to open the image for the profile instance
+
+img = Image.open(self.image.path)
+	it opens the image of current instance sand save to img.
 
 
 

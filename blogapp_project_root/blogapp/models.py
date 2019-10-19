@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 # import the user model
+from django.shortcuts import reverse
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 
@@ -14,3 +15,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('blog_post_detail', kwargs={'pk': self.pk})

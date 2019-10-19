@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.urls import reverse_lazy
 from .models import Post
 from datetime import datetime
 from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic import ListView, DetailView
+from django.views.generic import (ListView,
+                                  DetailView,
+                                  CreateView)
 
 
 # Create your views here.
@@ -24,8 +27,15 @@ class HomeView(ListView):
 class PostDetails(DetailView):
     model = Post
 
-# next once created the view, then map the urlpattern to this view.
-# here v pass a queryset of POst to post key.
+
+# creating new posts
+class CreatePost(CreateView):
+    model = Post
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
 def about(request, template_name='blogapp/about.html'):

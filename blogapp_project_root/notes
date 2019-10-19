@@ -519,13 +519,98 @@ here v set the url in template to this page as
 	<a href= '{% url 'post_details' post.pk %}' ></a>
 {% endfor %}
 
-note:
----------------
+
+page not found error
+------------------------------
 if v try to go to post with incorrect id
 it shows page not founs error. which means no post with the 
 given id.
 
 
+
+
+CREATE NEW POSTS- CreateView
+----------------------
+import CreateView
+here v need a form to add the details
+so need to specify the model and he fields needed.
+ 
+
+class ViewName(Createview):
+	model = Post
+	fields = ['title', 'content']
+
+
+mapthe urls to the view
+
+    path('create_post/', views.CreatePost.as_view(), name='blog-post-create'),
+
+
+later create the template as, modelname_form.html
+
+note: so here downt want to create a form module to create a post as in function based view, so class based views r more powerful.
+
+
+but there is an issue if v submit the form
+ie. Integrity error - NOT NULL constraint failed
+
+ir because v try to create a post bt we downt specify our author which is a foreign key field. and important evry post must have an author.
+ so want to specify current logged author in creatview.
+
+-- so we overide form_valid method
+
+
+	def form_valid(self, form) :
+		form.instance.author = self.request.user
+		return super().form_valid(form)
+
+which means bfore saving the post instance take that instance and set the author of that instance to current logged in user.
+and then run this form_valid() mthod on  our super class but bfore it runs v already overriden the form_valid() mthod.
+
+if v still runit cause error 
+ImproperlyConfigured at /create_post/
+no url to redirect to 
+
+
+here thepost is sabing to db vut we dont give where to redirect once submiited the post.
+
+to avoid this error
+
+get_absolute_url
+--------------------- 
+set, get_absulte_url method in model -used when v eant to that post details view.
+
+from django.shortcuts import reverse
+
+def get_absoluet_url(self):
+	return reverse('blogpost-detail', kwargs={'pk':self.pk})
+
+ie. here v retun to that new post detail page.
+so v give that post instance primary key.
+
+reverse vs redirect
+-----------------------
+
+redirect just redirect to a specific route, but reverse returns that full url to that route as a string.
+
+
+success_url
+------------------------
+ if eant  ot redirect to the homepageview or listview  not detailsview
+set success_url attribute to reverse_lazy('pathnamespace')
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 
 
 

@@ -3,10 +3,13 @@ from django.http import HttpResponse
 from django.urls import reverse_lazy
 from .models import Post
 from datetime import datetime
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import (ListView,
                                   DetailView,
-                                  CreateView)
+                                  CreateView,
+                                  UpdateView,
+                                  DeleteView, )
 
 
 # Create your views here.
@@ -29,13 +32,42 @@ class PostDetails(DetailView):
 
 
 # creating new posts
-class CreatePost(CreateView):
+class CreatePost(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'content']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+# update view
+
+class PostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post_obj = self.get_object()
+        if self.request.user == post_obj.author:
+            return True
+        return False
+
+
+# delete post
+class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    success_url = reverse_lazy('blogapp-home')
+
+    def test_func(self):
+        post_obj = self.get_object()
+        if self.request.user == post_obj.author:
+            return True
+        return False
 
 
 def about(request, template_name='blogapp/about.html'):

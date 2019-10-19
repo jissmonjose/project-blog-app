@@ -5,7 +5,9 @@ urlpatterns = [
     path('', views.HomeView.as_view(), name='blogapp-home'),
     path('post/<int:pk>/', views.PostDetails.as_view(), name='blog_post_detail'),
     path('about/', views.about, name='blogapp-about'),
-    path('create_post/', views.CreatePost.as_view(), name='blog-post-create'),
+    path('post/create/', views.CreatePost.as_view(), name='blog-post-create'),
+    path('post/<int:pk>/update', views.PostUpdate.as_view(), name='blog-post-update'),
+    path('post/<int:pk>/delete', views.PostDelete.as_view(), name='blog-post-delete'),
 ]
 
 # views.home returns httpresponse o bject.

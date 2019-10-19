@@ -599,11 +599,105 @@ success_url
  if eant  ot redirect to the homepageview or listview  not detailsview
 set success_url attribute to reverse_lazy('pathnamespace')
 
+login before creating post
+-----------------
+http://127.0.0.1:8000/create_post/ -
+
+the above url directs to create post page even though v r loged out,
+so when v navigate to this route, first nedd to show login screen. and after login createpost.
+
+for yhat in cbv's
+we first import 
+from djangi.contrib.auth.mixins import LoginRequredMixin
+
+and then sepcidy this class in view like
+	- class CreatePost(LoginRequiredMixin, CreateView):
+
+
+UPDATE VIEW TO UPDATE THE POST
+--------------------------------
+
+
+class Postupdae(updateView):
+	model = 
+	fields= []
+
+	    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+later map the urk to the viw
+
+path(post/<int:pk>/update, views.name.asview(), name='')
+here v need to specify the variable pk since updating a specific post.
 
 
 
 
+Restricting users from jupdating others post
+----------------------------------
 
+v use another mixin,
+called userpassestestmixin
+
+so first import it
+from  django.cotrib.auth.mixins import Userpassestestmixin
+
+later add it to the updateview as argument
+
+then if v run it shows error
+
+PostUpdate is missing the implementation of the test_func() method.
+
+
+so here v implement test_func() in view.
+
+def test_func(self):
+post = self.get_object() 
+if self.request.user == post.author:
+	return True
+return False	
+
+get_object() to get the current post.
+next make sure current user is the author of the post.
+later here v check whether current user is the author of the post.
+if yes return true no, then return false
+
+
+
+
+DELETING POST -deleteview
+-----------------------------------
+
+import DeletView
+
+
+
+class postdelete()
+	model = Post
+
+map the url to the view
+	    path('post/<int:pk>/delete', views.PostDelete.as_view(), name='blog-post-delete'),
+
+
+model_confirm_delete.html
+-----------------------------------
+later create a template valled post_confirm_delete.html
+
+which conatins a form that asks users for whether to delete or not.
+
+class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    success_url = reverse_lazy('blogapp-home')
+
+    def test_func(self):
+        post_obj = self.get_object()
+        if self.request.user == post_obj.author:
+            return True
+        return False
+
+here success_url since we want to return to the blog list page not its detail page.
 
 
 

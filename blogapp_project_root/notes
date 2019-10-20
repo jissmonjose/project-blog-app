@@ -703,15 +703,139 @@ here success_url since we want to return to the blog list page not its detail pa
 adding delete and update link in post deletail
 ------------------------------------------------
 
+ if the logged in user is the author of post then -->
+
+
+  {% if object.author == user %}
+                    <p>
+                        <a href="{% url 'blog-post-delete' object.pk %}" class="btn btn-danger">Delete</a>
+                        <a href="{% url 'blog-post-update' object.pk %}" class="btn btn-success">Update</a>
+                    </p>
+                    {% endif %}
  
 
 
+Pagination in django
+------------------------
+
+contents in multiple pages instead of cluttering all in asingle page.
+
+from django.core.paginator import Paginator
+
+create some posts
+posts = ['1', '2', '3', '4','5']
+
+create a paginator object
+p = Paginator(posts, 2)
+this means two posts in a page, means total of total 3 pages.
+
+p.num_pages
+above code o/ps value 3
+
+to loop thru those pages use page_range attribute
+
+for page in p.page_range:
+	print(page)
+1
+2
+3
+
+to get specfic page from this
+p1 = p.page(1)
+here v get the page 1 of 3
+
+to get the number of that page.
+p1.number
+
+to get objects lists in that page
+p1.object_list
+
+
+prevous page or not
+--------------------
+
+>>> p1.has_previous()
+False
+>>> p1.has_next()
+True
+
+
+to get the next an previous page  number
+-----------------------------
+
+p1.next_page_number()
+p1.prevous_pae_number()
+
+
+
+lext back to the project
+-----------
+
+PAGINATE_BY
+-----------------
+in cbv's, here v need to set an attribute ON liSTvIEW calles 'paginateby'
+
+paginate_by = 2
+
+which paginates pages based on given number
+so 2 posts per page
+
+
+navigate thru pages
+---------------
+http://127.0.0.1:8000/?page=1
+http://127.0.0.1:8000/?page=2
+http://127.0.0.1:8000/?page=3
+http://127.0.0.1:8000/?page=4
+http://127.0.0.1:8000/?page=10 - page not foud 404 error.
+
+
+
+Navuigating thru pages
+------------------------
+adding links to page to navigate thru these page rather typing like yhis
 
  
+{% if is_paginated %}
+	
+	{% if page_obj.has_previous %}
+
+		<a href='?page=1'>First</a>		
+		<a href='?page={{page_obj.prevous_page_number}}'>Prevous</a>
+	{% endif%}
+
+{% endif %}
 
 
+if pge in paginated, then add links to prevous pages and next pages
+for examples if page has prevous pages then paginate to previous pages and also the first page.
 
 
+pag_obj - is a page object that view deafult pass to the template.
+
+to have links to few pages around the current page
+for eg: if cuuren page is 5 then provide links to page before and after
+5.
+
+
+<!--                loop thru all pages -->
+                {% for p in page_obj.paginator.page_range %}
+			{% if page_obj.number == p %}
+				                        <a href="?page={{ p }}" class="btn btn-info mb-4">{{ p }}</a>
+
+			{% endif %}
+                {% endfor %}
+
+with in thes looop, print only the cuurent page and some pages around it.
+ie if the current page. here page_obj.number is the current page
+	then display it differenlty.
+	
+
+
+ 
+<a href='?page=1'>First</a> - move to first page 
+<a href='?page={{page_obj.prevous_page_number}}'>Prevous</a>
+	-- move to prevous page
 
 
 
@@ -719,6 +843,14 @@ adding delete and update link in post deletail
 
 megan
 testing888
+
+benzema
+testing2011
+
+
+mathew
+testing2022
+
 
 
 

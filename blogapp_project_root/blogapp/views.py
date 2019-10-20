@@ -24,6 +24,7 @@ class HomeView(ListView):
     context_object_name = 'posts'
     # to order the post from latest to oldest
     ordering = ['-date']
+    paginate_by = 4
 
 
 # details view

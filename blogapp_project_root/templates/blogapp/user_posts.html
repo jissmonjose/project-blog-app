@@ -1,22 +1,28 @@
 {% extends 'blogapp/base.html' %}
 
 {% block content %}
-    <section id="content">
+    {% if posts %}
 
-            {% for post in posts %}
-            <div class="card my-3">
+<!--here v get the name of author and count of his post -->
+    <h1 class="text-secondary">Posts by {{view.kwargs.username }}</h1>
+        {% for post in posts %}
+              <div class="card my-3">
 
                 <div class="card-header"><a href="{% url 'blog_post_detail' post.pk %}" class="text-dark">{{post.title}}</a></div>
                 <div class="card-body">
 <!--                    <h4 class="card-title">{{post.author}}</h4>-->
                     <p class="card-title">{{post.content}}</p>
-                    <p><a href="{% url 'users_blog' post.author.username %}">{{post.author}}</a></p>
                     <p>{{post.date|date:"F d, Y"}}</p>
                 </div>
             </div>
 
-            {% endfor %}
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-secondary" role="alert">
+            No Post Yet!
+        </div>
 
+    {% endif %}
 
 <!-- pagination -->
  {% if is_paginated %}
@@ -40,8 +46,6 @@
       {% endif %}
 
  {% endif %}
-    </section>
+
 
 {% endblock %}
-
-

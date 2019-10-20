@@ -838,6 +838,59 @@ ie if the current page. here page_obj.number is the current page
 	-- move to prevous page
 
 
+Entire pagination code:
+-----------------------------
+
+
+<!-- pagination -->
+ {% if is_paginated %}
+
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4 mt-2" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4 mt-2" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4 mt-2" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4 mt-2" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4 mt-2" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4 mt-2" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+ {% endif %}
+
+
+NEST TO LIST THE POST MADE BY AUTHOR WHEN V CLICK ON THAT AUTHOR
+------------------------------------------------------------------
+similar to post list view
+just need to filter posts based on it author
+
+
+    def get_query_set(self):
+        # v try to get the user when v click link on author name in post list
+        # to get that user object v do self.kwargs.get('username')
+        # self.kwargs is a dictionary of that user datas. and v use get method to fetch username of that user from that dictionary
+        # here if user exists in User model v store it in user variable else, return 404 error
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+	     # now filter the post list based on author and order it by date.
+        return Post.objects.filter(author=user).order_by('-date')
+
+
+later in urls.py
+-----------------------
+    path('user/<str:username>/', views.UserPostView.as_view(), name='users_blog'),
+
+specify the variable username which is a string type.
+here v navigate based on username of a user not id.
+
+
+
 
 
 

@@ -700,7 +700,10 @@ class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 here success_url since we want to return to the blog list page not its detail page.
 
 
+adding delete and update link in post deletail
+------------------------------------------------
 
+ 
 
 
 

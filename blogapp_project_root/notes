@@ -890,6 +890,52 @@ specify the variable username which is a string type.
 here v navigate based on username of a user not id.
 
 
+EMAIL AND PASSWORD RESETTING
+---------------------
+
+create a url pattern  called password reset
+
+path('password-reset',
+         auth_views.PasswordResetView.as_view(template_name='usersapp/password_reset.html',                                              name='password_reset')),
+
+-- This views gives  atemplate that conains a form to be filled which password reset instruction to the email of user.
+ 
+password_reset.html
+------------------------
+{% extends 'blogapp/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <section id="login">
+
+                <div class="card">
+                    <div class="card-body">
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                         <h2 class="text-secondary border-bottom">Password Reset</h2>
+                    </div>
+                    {{form|crispy}}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-info btn-block">Send Message</button>
+                    </div>
+
+                </form>
+                    </div>
+                </div>
+
+</section>
+
+{% endblock %}
+
+-- NEXT NEED TO CREATE A PAGE TO BE SHOWN AFTER THIS FORM IS SAVED SUCCESFULLY.
+-- SO FIRST CREATE A ROUTE THAT CONFIRMS EMAIL HAS BEEN SEND SUCCESSULLY.
+-- THEN THIS ROUTE DIRECTS TO AFOREMENTIONED PAGE AFTER FORM IS SUBMITTED.
+
+
+
 
 
 

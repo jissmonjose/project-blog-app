@@ -934,6 +934,24 @@ password_reset.html
 -- SO FIRST CREATE A ROUTE THAT CONFIRMS EMAIL HAS BEEN SEND SUCCESSULLY.
 -- THEN THIS ROUTE DIRECTS TO AFOREMENTIONED PAGE AFTER FORM IS SUBMITTED.
 
+IN URLS.PY MODULE
+-------------------
+    path('password_reset/',
+         auth_views.PasswordResetView.as_view(template_name='usersapp/password_reset.html'),
+         name='password_reset'),
+    path('password_reset/done',
+         auth_views.PasswordResetDoneView.as_view(template_name='usersapp/password_reset_done.html'),
+         name='password_reset_done'),
+
+
+IF V RUNS THE SRVER IT THROWS ErrOR.
+
+NoReverseMatch at /user/password_reset/
+Reverse for 'password_reset_done' not found. 'password_reset_done' is not a valid view function or pattern name.
+
+it BECUASE, there is no route named password_reset_done.
+ 
+so lets create this route to solve issue.
 
 
 

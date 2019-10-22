@@ -27,6 +27,14 @@ class HomeView(ListView):
     ordering = ['-date']
     paginate_by = 4
 
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            posts = self.model.objects.filter(title__icontains=query)
+        else:
+            posts = self.model.objects.none()
+        return posts
+
 
 # details view
 class PostDetails(DetailView):

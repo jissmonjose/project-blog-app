@@ -3,6 +3,21 @@
 
 {% block content %}
 
+<section id="bc" class="pt-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'blogapp-home' %}">Home</a>
+
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Post
+            </li>
+        </ol>
+    </nav>
+
+</section>
+
     <section id="postdetails">
             <div class="card my-3">
 
@@ -10,7 +25,7 @@
                 <div class="card-body">
 <!--                    <h4 class="card-title">{{post.author}}</h4>-->
                     <p class="card-title">{{object.content}}</p>
-                    <p><a href="#">{{object.author}}</a></p>
+                    <p><a href="{% url 'users_blog' object.author.username %}">{{object.author}}</a></p>
                     <p>{{object.date|date:"F d, Y"}}</p>
 <!--                    if the logged in user is the author of post then -->
                     {% if object.author == user %}

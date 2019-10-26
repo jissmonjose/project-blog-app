@@ -1,6 +1,17 @@
 {% extends 'blogapp/base.html' %}
 
 {% block content %}
+
+<section id="bc" class="pt-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                Home
+            </li>
+        </ol>
+    </nav>
+
+</section>
     <section id="content">
 
             {% for post in posts %}

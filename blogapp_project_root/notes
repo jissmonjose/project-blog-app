@@ -1010,6 +1010,55 @@ ssearch feature-->
 
 
 
+template tags in django
+-------------------------
+create a templatetags dir in apps dir.
+
+later create py file eg: my_tags.py
+then create a __init__.py file to make it as python package.
+later add the custom inclusion template tag and the code to my_tags.py
+
+
+from django import template
+
+from ..models import Post
+
+register = template.Library()
+@register.inclusion_tag('blogapp/sidebars.html')
+def sidebar_sorted_tags():
+    posts = Post.objects.all().order_by('-date')[:5]
+    return {'posts': posts}
+
+then add the bloew template lang to base.html
+
+{% load my_tags %}
+
+{% sidebar_sorted_tags %}
+
+sidebars.html
+-----------------
+{% block content %}
+<section id="sidebar">
+
+    <h4 class="text-secondary">Latest posts</h4>
+ <div class="list-group">
+     {% for post in posts %}
+        <a href="{% url 'blog_post_detail' post.pk %}" class="list-group-item list-group-item-action list-group-item-info text-dark">
+            {{post}}
+        </a>
+     {% endfor %}
+ </div>
+
+
+</section>
+
+{% endblock %}
+
+
+then restart the server,
+
+
+
 
 megan
 testing888

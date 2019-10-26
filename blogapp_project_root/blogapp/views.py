@@ -32,7 +32,7 @@ class HomeView(ListView):
         if query:
             posts = self.model.objects.filter(title__icontains=query)
         else:
-            posts = self.model.objects.none()
+            posts = self.model.objects.all()
         return posts
 
 

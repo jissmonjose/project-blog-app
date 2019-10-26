@@ -953,6 +953,59 @@ it BECUASE, there is no route named password_reset_done.
  
 so lets create this route to solve issue.
 
+later add below line to the project/urls.py file
+
+ re_path(r'^', include('django.contrib.auth.urls'))
+
+CONNECTION REFUSED ERROR
+------------------------------
+ConnectionRefusedError at /user/password-reset/
+
+it shows v havent set up an email server
+
+
+HIDING PASSWORD AND EMAIL IN ENVIRONMENT - PYTHON
+-----------------------------------------
+
+
+
+
+
+SEARCH FEATURE IN CLASS BASED VIEWS
+----------------------
+
+Class HomeView(ListView):
+    model = Post
+    context_object_name = 'posts'
+    # to order the post from latest to oldest
+    ordering = ['-date']
+    paginate_by = 4
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            posts = self.model.objects.filter(title__icontains=query)
+        else:
+            posts = self.model.objects.none()
+        return posts
+
+
+here v define valled get_queryset
+qand get the searxh term q and if true then filter the post 
+by searching which term in title matcheswith the query.
+and if macthes return that post 
+
+
+
+in templates
+----------------
+ssearch feature-->
+     <form class="form-inline mr-4" method="GET" action="">
+                            <input class="form-control mr-sm-2" name="q" type="search" placeholder="search posts" aria-label="Search" value="{{ request.GET.q }}">
+                             <input type="submit" value="Search" class="btn btn-outline-white btn-md my-0 ml-sm-2">
+
+                        </form>
+
 
 
 

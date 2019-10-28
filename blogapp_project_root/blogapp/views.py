@@ -120,7 +120,7 @@ def add_comment(request, pk):
 
 @login_required
 def comment_approve(request, pk):
-    comment = get_object_or_404(Comments, pk=pk)
+    comment = get_object_or_404(Comments, pk_=pk)
     comment.approve()
     return redirect('blog_post_detail', pk=comment.post.pk)
 

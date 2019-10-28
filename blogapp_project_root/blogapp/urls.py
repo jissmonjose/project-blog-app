@@ -9,6 +9,9 @@ urlpatterns = [
     path('post/create/', views.CreatePost.as_view(), name='blog-post-create'),
     path('post/<int:pk>/update', views.PostUpdate.as_view(), name='blog-post-update'),
     path('post/<int:pk>/delete', views.PostDelete.as_view(), name='blog-post-delete'),
+    path('post/<int:pk>/comment/', views.add_comment, name='add_comments'),
+    path('comment/<int:pk>/approve/', views.comment_approve, name='comment_approve'),
+    path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
 ]
 
 # views.home returns httpresponse object.

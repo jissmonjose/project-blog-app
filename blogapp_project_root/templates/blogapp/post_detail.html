@@ -21,5 +21,23 @@
                 </div>
             </div>
     </section>
+<hr>
+    <a href="{% url 'add_comments' pk=post.pk %}" class="btn btn-info">Comment Here</a>
+    {% for comment in post.comments.all %}
+        {% if user.is_authenticated or comment.approved_comment %}
 
+        <div class="comment">
+            <div class="date">{{comment.created_date}}
+            {% if not comment.approved_comment %}
+                <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+                <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
+            {% endif %}
+            </div>
+            <strong>{{comment.author}}</strong>
+            <p>{{comment.text}}</p>
+        {% endif %}
+        </div>
+    {% empty %}
+        <p>No Comments :(</p>
+    {% endfor %}
 {% endblock %}

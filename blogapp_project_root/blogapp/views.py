@@ -1,7 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-from .models import Post
+from .models import Post, Comments
 from datetime import datetime
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView, LogoutView
@@ -11,6 +11,8 @@ from django.views.generic import (ListView,
                                   UpdateView,
                                   DeleteView, )
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from .forms import CommentForm
 
 
 # Create your views here.
@@ -99,3 +101,32 @@ class UserPostView(ListView):
 
 def about(request, template_name='blogapp/about.html'):
     return render(request, template_name, {'title': 'About'})
+
+
+# create a message form
+def add_comment(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('blog_post_detail', pk=post.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blogapp/comments_form.html', {'form': form})
+
+
+@login_required
+def comment_approve(request, pk):
+    comment = get_object_or_404(Comments, pk=pk)
+    comment.approve()
+    return redirect('blog_post_detail', pk=comment.post.pk)
+
+
+@login_required
+def comment_remove(request, pk):
+    comment = get_object_or_404(Comments, pk=pk)
+    comment.delete()
+    return redirect('blog_post_detail', pk=comment.post.pk)

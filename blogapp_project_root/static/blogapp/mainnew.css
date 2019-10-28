@@ -20,6 +20,11 @@ ul {
   color: #cbd5db;
 }
 
+.comment
+{
+    margin:20px 0px 20px 20px;
+}
+
 .site-header .navbar-nav .nav-link:hover {
   color: #ffffff;
 }

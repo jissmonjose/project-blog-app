@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now
 from django.utils import timezone
 
+
 # Create your models here.
 class Post(models.Model):
     title = models.CharField(max_length=100)
@@ -18,6 +19,9 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog_post_detail', kwargs={'pk': self.pk})
+
+    def approved_comments(self):
+        return self.comments.filter(approved_comment=True)
 
 
 class Comments(models.Model):
@@ -34,3 +38,5 @@ class Comments(models.Model):
     def __str__(self):
         return self.text
 
+    def get_absolute_url(self):
+        return reverse('blog_post_detail', kwargs={'pk': self.pk})

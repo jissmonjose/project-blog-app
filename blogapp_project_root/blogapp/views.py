@@ -130,3 +130,8 @@ def comment_remove(request, pk):
     comment = get_object_or_404(Comments, pk=pk)
     comment.delete()
     return redirect('blog_post_detail', pk=comment.post.pk)
+
+
+class CommentEdit(UpdateView):
+    model = Comments
+    fields = ('author', 'text',)

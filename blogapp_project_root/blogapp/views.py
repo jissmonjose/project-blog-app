@@ -120,7 +120,7 @@ def add_comment(request, pk):
 
 @login_required
 def comment_approve(request, pk):
-    comment = get_object_or_404(Comments, pk_=pk)
+    comment = get_object_or_404(Comments, pk=pk)
     comment.approve()
     return redirect('blog_post_detail', pk=comment.post.pk)
 
@@ -132,6 +132,11 @@ def comment_remove(request, pk):
     return redirect('blog_post_detail', pk=comment.post.pk)
 
 
-class CommentEdit(UpdateView):
-    model = Comments
-    fields = ('author', 'text',)
+# update the comments
+def comment_update(request, pk, template_name='blogapp/comments_form.html'):
+    comment = get_object_or_404(Comments, pk=pk)
+    form = CommentForm(request.POST or None, instance=comment)
+    if form.is_valid():
+        form.save()
+        return redirect('blog_post_detail', pk=comment.post.pk)
+    return render(request, template_name, {'form': form})

@@ -15,7 +15,7 @@
                     <p>{{post.date|date:"F d, Y"}}</p>
                 </div>
             </div>
-
+        <a href="{% url 'blog_post_detail' post.pk %}" class="btn btn-secondary px-4">Back</a>
         {% endfor %}
     {% else %}
         <div class="alert alert-secondary" role="alert">

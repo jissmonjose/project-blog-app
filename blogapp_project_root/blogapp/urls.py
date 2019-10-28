@@ -12,7 +12,7 @@ urlpatterns = [
     path('post/<int:pk>/comment/', views.add_comment, name='add_comments'),
     path('comment/<int:pk>/approve/', views.comment_approve, name='comment_approve'),
     path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
-    path('comment/<int:pk>/edit/', views.CommentEdit.as_view(), name='comment_edit'),
+    path('comment/<int:pk>/edit/', views.comment_update, name='comment_edit'),
 ]
 
 # views.home returns httpresponse object.

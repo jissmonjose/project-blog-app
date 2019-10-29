@@ -6,7 +6,7 @@
 This blogs project allows the user to publish their blogs in the application.
 In this Django App, user initially need to register in and login to post their blogs. There are different features added in this application. Users can update their profile, can search through the blogs based on title of the post, Shows latest posts in the sidebar. The comments features allows a reader to post their comment for a post, can also remove, approve and edit it.
 
-![Django Blogs Application](https://github.com/jissmonjose/students-courses-app/blob/master/screenshots/screenshot3.png)
+![Django Blogs Application](https://github.com/jissmonjose/project-blog-app/blob/master/screenshot/Screenshot1.png)
 
 
 

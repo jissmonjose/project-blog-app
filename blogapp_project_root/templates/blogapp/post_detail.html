@@ -22,7 +22,12 @@
             </div>
     </section>
 
-    <a href="{% url 'add_comments' pk=post.pk %}" class="btn btn-info">Comment Here</a>
+    {% if object.author != user %}
+        <a href="{% url 'add_comments' pk=post.pk %}" class="btn btn-info">Comment Here</a>
+    {% else %}
+        <a href="{% url 'add_comments' pk=post.pk %}" class="btn btn-info d-none">Comment Here</a>
+
+    {% endif %}
     {% for comment in post.comments.all %}
         {% if user.is_authenticated or comment.approved_comment %}
 

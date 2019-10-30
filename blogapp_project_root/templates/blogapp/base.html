@@ -85,10 +85,14 @@
 
 
         </div>
-        {% if user.is_authenticated %}
-          <div class="col-md-4 py-4">
+        {% if 'login/' in request.path or 'register/' in request.path or 'logout/' in request.path %}
+          <div class="col-md-4 py-4 d-none">
               {% sidebar_results %}
           </div>
+          {% else %}
+            <div class="col-md-4 py-4">
+              {% sidebar_results %}
+            </div>
           {% endif %}
       </div>
     </main>
@@ -118,3 +122,4 @@
 
 </body>
 </html>
+`

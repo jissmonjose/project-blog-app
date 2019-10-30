@@ -85,10 +85,11 @@
 
 
         </div>
-
+        {% if user.is_authenticated %}
           <div class="col-md-4 py-4">
               {% sidebar_results %}
           </div>
+          {% endif %}
       </div>
     </main>
 

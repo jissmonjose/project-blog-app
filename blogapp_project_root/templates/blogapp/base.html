@@ -10,17 +10,13 @@
     crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/0bcda0c8ae.js"></script>
     <link rel="stylesheet" href="{% static 'blogapp/styles_2.css' %}">
-    {% if title %}
-        <title>Django Blog|{{title}}</title>
-    {% else %}
-        <title>Django Blog</title>
-    {% endif %}
+    <title>LinuxCenter</title>
 </head>
 <body>
        <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-info fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'blogapp-home' %}">LinuxHUb</a>
+          <a class="navbar-brand mr-4" href="{% url 'blogapp-home' %}">LinuxCentre</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
@@ -105,7 +101,7 @@
                    <script type="text/javascript">
                         document.write(new Date().getFullYear());
                     </script>
-                   LinuxHUb.com
+                   LinuxCentre.com
                    </p>
 
            </div>

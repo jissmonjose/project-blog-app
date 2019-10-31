@@ -138,14 +138,15 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # SMTP backend
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-# GET THE ENVIRONMENT VARIABLES SAVED IN BASHRC FILE
-# email host user is the gmail address.
-EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# # GET THE ENVIRONMENT VARIABLES SAVED IN BASHRC FILE
+# # email host user is the gmail address.
+# EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 
 # django heroku
 django_heroku.settings(locals())
+

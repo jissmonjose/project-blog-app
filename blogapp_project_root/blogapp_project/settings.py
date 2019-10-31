@@ -119,6 +119,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIR = [
     os.path.join(BASE_DIR, 'static')
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # CRISPY FORMS
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -143,4 +144,3 @@ EMAIL_USE_TLS = True
 # email host user is the gmail address.
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
-
